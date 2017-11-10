@@ -2,9 +2,21 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT;
 const cors = require('cors');
+const superagent = require('superagent');
 
 app.use(express.static('./public'));
 app.use(cors());
+
+app.get('/github/*', (req, res) =>{
+  console.log('routing a Guthub API request for', req.params[0]);
+  const url = `https://api.github.com/${req.params[0]}`;
+  superagent(url)
+    .set(`Authorization`, `token ${process.env.GITHUB_TOKEN}`)
+    .then(
+      repos => res.send(repos.text),
+      err => res.send(err)
+    )
+})
 
 app.get('/', (req, res) => {
   res.sendFile('index.html')
