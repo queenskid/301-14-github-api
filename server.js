@@ -8,9 +8,11 @@ app.use(express.static('./public'));
 app.use(cors());
 
 app.get('/github/*', (req, res) =>{
-  console.log('routing a Guthub API request for', req.params[0]);
-  const url = `https://api.github.com/${req.params[0]}`;
-  superagent(url)
+  console.log('routing a Github API request for', req.params[0]);
+
+const url = `https://api.github.com/${req.params[0]}`;
+
+superagent(url)
     .set(`Authorization`, `token ${process.env.GITHUB_TOKEN}`)
     .then(
       repos => res.send(repos.text),

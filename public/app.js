@@ -1,13 +1,5 @@
 // Let's make an AJAX call to the GitHub API and then do a simple render of the data into the DOM
 
-// $.ajax({
-//   url: 'https://api.github.com/user/repos?type=owner',
-//   method: 'GET',
-//   headers: {
-//     Authorization: 'token '
-//   }
-// })
-
 $.get('/github/user/repos')
   .then(
     data => JSON.parse(data).forEach(repo =>
